@@ -1,0 +1,12 @@
+method: 'random'
+metric:
+  name: 'acc'
+  goal: 'maximize'
+parameters:
+  batch_size:
+    values: [256, 128, 64, 32]
+  epochs:
+    values: [10, 20, 30, 40]
+  lr: 
+    max: 0.2
+    min: 0.0001

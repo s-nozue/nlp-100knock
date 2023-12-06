@@ -1,0 +1,1 @@
+['us', 'forces', 'hand', 'over', 'seized', 'oil', 'tanker', 'to', 'libya', 'agency'] -> [12, 4528, 2437, 24, 3780, 108, 1644, 2, 991, 1058]
