@@ -1,5 +1,5 @@
 '''
-事前学習済み言語モデルからの転移学習Permalink
+89. 事前学習済み言語モデルからの転移学習
 事前学習済み言語モデル（例えばBERTなど）を出発点として，ニュース記事見出しをカテゴリに分類するモデルを構築せよ．
 '''
 import wandb
@@ -49,6 +49,8 @@ def label_filter(labels):
 
 def main():
     wandb.init(project='89_bert')
+    models_dir = '/work01/s-nozue/100knock/chapter09/bert_models'
+    model_name = 'bert-base-uncased-classification'
 
     tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
     model = AutoModelForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=4)
@@ -92,6 +94,11 @@ def main():
         acc, eval_loss = eval(model, valid_dataloader)
         wandb.log({'train_loss': train_loss, 'eval_loss': eval_loss, 'train_accuracy': train_acc, 'eval_accuracy': acc, 'lr:': optimizer.param_groups[0]["lr"]})
         print(f'epoch: {epoch + 1}, train_loss: {train_loss}, eval_loss: {eval_loss}, train_accuracy: {train_acc}, eval_accuracy: {acc}, lr: {optimizer.param_groups[0]["lr"]}')
+        save_path = f'{models_dir}/{model_name}_{epoch + 1}'
+
+        tokenizer.save_pretrained(save_path)
+        model.save_pretrained(save_path)
+        
         scheduler.step(epoch + 1)
 
     wandb.finish()
